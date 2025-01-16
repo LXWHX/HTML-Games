@@ -34,7 +34,7 @@
 ---
 
 ## Screenshot
-![Robot Lab Screenshot]https://github.com/LXWHX/HTML-Games/blob/main/Escape_From_Robot_Lab_2022_11_11/8ae57949a4cef97a89c1526596e5f82.png)
+![Robot Lab Screenshot](https://github.com/LXWHX/HTML-Games/blob/main/Escape_From_Robot_Lab_2022_11_11/8ae57949a4cef97a89c1526596e5f82.png)
 ![Robot Lab Screenshot2](https://github.com/LXWHX/HTML-Games/blob/main/Escape_From_Robot_Lab_2022_11_11/c2e63d7eb18b35d44c17ec352494126.png)
 ![Robot Lab Screenshot3](https://github.com/LXWHX/HTML-Games/blob/main/Escape_From_Robot_Lab_2022_11_11/dc091d11d35fee08a21e7ef22e9ec6c.png)
 
