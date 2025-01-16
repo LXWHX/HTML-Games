@@ -33,7 +33,7 @@
 ---
 
 ## Screenshot
-![Game Screenshot](Watermelon_rocket_2022_09_23/00c160de8b14abe37f33dc98dab928e.png)
+![Game Screenshot](https://github.com/LXWHX/HTML-Games/blob/main/Watermelon_rocket_2022_09_23/00c160de8b14abe37f33dc98dab928e.png)
 
 ---
 
