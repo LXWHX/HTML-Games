@@ -29,7 +29,7 @@
 ---
 
 ## Screenshot
-![Game Screenshot]([screenshot.png](https://github.com/LXWHX/HTML-Games/blob/main/Invador_Pong_2022_09_09/d6b335bf676b79d601772318dc32ec0.png))
+![Game Screenshot](https://github.com/LXWHX/HTML-Games/blob/main/Invador_Pong_2022_09_09/d6b335bf676b79d601772318dc32ec0.png)
 
 ---
 
