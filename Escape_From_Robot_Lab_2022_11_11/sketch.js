@@ -1,4 +1,4 @@
-/*in this project, Qianhui Xie and Shiqian Li worked this our together. Qianhui Xie solved the problem of switching between screens, and designed the enemy character. Shiqianli designed the main player's character and added play scree. 
+/*In this project, Qianhui Xie and Shiqian Li worked this our together. Qianhui Xie designed mainscreen,instruction screen and enemy,. Shiqianli designed the main player's character and the function of switching between multiple tilemaps. 
 
 */
 const MAX_TRAIL_COUNT = 30;
@@ -11,7 +11,7 @@ var maps = [];
 //temp virables
 var ptemp = 0;
 var btemp = 0;
-
+mapnum = 0;
 var ball = [];
 var wind;
 var windSpeed = 0.002;
@@ -40,29 +40,140 @@ class Wall {
 }
 
 class GameObject {
-  constructor() {
+  constructor() {//create tilemaps for each level
     this.tilemap = [
+            "                    ",
+      "                    ",
+      "                 ",
+      "                    ",
+      "                  ",
+      "wwww wwww                ",
+      "wwww      wwww          e  ",
+      "wwww          wwww         ",
+      "wwww              wwww      ",
+      "wwww                  wwww         ",
+      "wwww                      wwww",
+      "wwww                          wwww    ",
+      "wwww                              wwww ",
+      "wwww                                  b",
+      "wwww                              wwww",
+      "wwww                          www      ",
+      "wwww                      www         ",
+      "wwww                  www  ",
+      "wwww             www   ",
+      "p           wwww       ",
+      "www   wwww              ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                                                                                                              ",
+
+    ];
+            this.tilemap1=[
+              "                    ",
+      "                                      w",
+      "                                     ww",
+      "                                      w",
+      "                                      w",
+      "www                                  www ",
+      "      ww  www                    ",
+      "                                ",
+      "           www       wwwwwwwwwwwwww",
+      "                    ",
+      "wwww    wwww     w   ",
+      "                    wwww",
+      "              wwww          ",
+      "wwww                 ",
+      "           www                    e",
+      "                   wwwwwwwwww ",
+      "        www                  www",
+      "wwww                             ",
+      "              wwwww           wwww",
+      "p      www           b          ",
+      "www                 wwwwwwwwwww",
       "                    ",
       "                    ",
       "                    ",
       "                    ",
+
+          ];
+              this.tilemap2= [
+      "                                    www ",
+      "                                   w   w",
+      "                                      w",
+      " e                                   w",
+      "                                    w",
+      "wwwwwwwwwwwwww                     wwwww",
+      "                                 ",
+      "                   wwwwwwwwwwwwww",
       "                    ",
-      "www d                ",
-      "    www                          www ",
-      "                             b",
-      "        www                www ",
-      "                    ",
-      "            www       www",
-      "                    ",
-      "                wwwwww",
-      "                    ",
-      "           www        www",
+      "wwwwwwwwwwwwww                    ",
+      "                                     ",
+      "                   wwwwwwwwwwwwww",
       "                                    ",
-      "        www                 www",
-      "                                   b ",
-      "    www                          www",
+      "wwwwwwwwwwwwww                    ",
+      "                                     ",
+      "                   wwwwwwwwwwwwww",
+      "                                         ",
+      "wwwwwwwwwwwwww                    ",
+      "                                b",
+      "p                  wwwwwwwwwwwwww         ",
+      "wwwwwwwwwwwwww      ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+    ];
+                  this.tilemap3 = [
+      "                                    www ",
+      "                                   w   w",
+      "                                     ww",
+      "                                     ww",
+      "                                   w   w",
+      "www                                 www",
+      "    www             ",
+      "                    ",
+      "        www                           e",
+      "                    ",
+      "            www     ",
+      "                    ",
+      "                wwww",
+      "                    ",
+      "          b www     ",
+      "                    ",
+      "        www         ",
+      "                    ",
+      "    www             ",
       "p                   ",
-      "www    wwwwwwwwwwwwwwwwwwwwwww  ",
+      "www                 ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      
+    ];
+                  this.tilemap4 = [
+      "w  w    www    w   w  ",
+      " ww    w   w   w   w  ",
+      "  w    w   w   w   w  ",
+      "  w     www     www w ",
+      "                    ",
+      "                    ",
+      "w     w   w   w   w  ",
+      "w  w  w   w   w w w  ",
+      " w w w    w   w  ww   ",
+      "  w  w    w   w   w  ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "w                  w  ",
+      "w                  w  ",
+      "w                  w   ",
+      "w                  w  ",
+      "wp                 w  ",
+      "wwwwwwwwwwwwwwwwwwww",
       "                    ",
       "                    ",
       "                    ",
@@ -76,7 +187,9 @@ class GameObject {
     this.gamewin = false;
     this.walls = [];
     this.player;
-    //this.battery = [];
+    this.battery = [];
+    this.ene;
+    this.cannon = [];
   }
   //draw tilemap
   initmap() {
@@ -90,42 +203,205 @@ class GameObject {
           case "p":
             this.player = new Player(j * 20, i * 20);
             break;
-           case "b":
-             battery.push(new batteryObj(j * 20, i * 20));
-             break;
-          case "d":
-             doors.push(new doorObj(j * 20, i * 20));
-             break;
+          case "b":
+            this.battery.push(new batteryObj(j * 20, i * 20));
+            break;
+          
+          case "f":
+            this.cannon.push(new cannonObj(j * 20, i * 20));
+            break;
+            
+            
+          case "e":
+            this.ene= new eneoObj(j * 20, i * 20);
+            break;
+        }
+      }
+    }
+  }
+    initmap1() {//draw tilemap
+    for (var i = 0; i < this.tilemap1.length; i++) {
+      for (var j = 0; j < this.tilemap1[i].length; j++) {
+        switch (this.tilemap1[i][j]) {
+          case "w":
+            this.walls.push(new Wall(j * 20, i * 20));
+            break;
+
+          case "p":
+            this.player = new Player(j * 20, i * 20);
+            break;
+          case "b":
+            this.battery.push(new batteryObj(j * 20, i * 20));
+            break;
+          
+          case "f":
+            this.cannon.push(new cannonObj(j * 20, i * 20));
+            break;
+            
+            
+          case "e":
+            this.ene= new eneoObj(j * 20, i * 20);
+            break;
+        }
+      }
+    }
+  }
+    initmap2() {//draw tilemap
+    for (var i = 0; i < this.tilemap2.length; i++) {
+      for (var j = 0; j < this.tilemap2[i].length; j++) {
+        switch (this.tilemap2[i][j]) {
+          case "w":
+            this.walls.push(new Wall(j * 20, i * 20));
+            break;
+
+          case "p":
+            this.player = new Player(j * 20, i * 20);
+            break;
+          case "b":
+            this.battery.push(new batteryObj(j * 20, i * 20));
+            break;
+          
+          case "f":
+            this.cannon.push(new cannonObj(j * 20, i * 20));
+            break;
+            
+            
+          case "e":
+            this.ene= new eneoObj(j * 20, i * 20);
+            break;
+        }
+      }
+    }
+  }
+      initmap3() {//draw tilemap
+    for (var i = 0; i < this.tilemap3.length; i++) {
+      for (var j = 0; j < this.tilemap3[i].length; j++) {
+        switch (this.tilemap3[i][j]) {
+          case "w":
+            this.walls.push(new Wall(j * 20, i * 20));
+            break;
+
+          case "p":
+            this.player = new Player(j * 20, i * 20);
+            break;
+          case "b":
+            this.battery.push(new batteryObj(j * 20, i * 20));
+            break;
+          
+          case "f":
+            this.cannon.push(new cannonObj(j * 20, i * 20));
+            break;
+            
+            
+          case "e":
+            this.ene= new eneoObj(j * 20, i * 20);
+            break;
+        }
+      }
+    }
+  }
+      initmap4() {//draw tilemap
+    for (var i = 0; i < this.tilemap4.length; i++) {
+      for (var j = 0; j < this.tilemap4[i].length; j++) {
+        switch (this.tilemap4[i][j]) {
+          case "w":
+            this.walls.push(new Wall(j * 20, i * 20));
+            break;
+
+          case "p":
+            this.player = new Player(j * 20, i * 20);
+            break;
+          case "b":
+            this.battery.push(new batteryObj(j * 20, i * 20));
+            break;
+          
+          case "f":
+            this.cannon.push(new cannonObj(j * 20, i * 20));
+            break;
+            
+            
+          case "e":
+            this.ene= new eneoObj(j * 20, i * 20);
+            break;
         }
       }
     }
   }
 }
 
-var battery = [];
-var doors=[];
-//batteries
-class doorObj{
-    constructor(x, y){
+
+//////create cannon
+class cannonObj{
+  constructor(x,y){
     this.x = x;
     this.y = y;
-
-  }
-    draw(){
-        fill(100,70,100);
-        strokeWeight(0.66);
-        fill(100,70,100);
-
-        //point(this.x + 10, this.y - 5);
-        fill(10,60,160);
-        rect(this.x, this.y-22.5, 30, 40);
-        fill(230,230,30);
-        ellipse(this.x+20,this.y,7,7)
     
-        
   }
+  
+  draw(){
+    
+    
+    fill(255, 234, 0);
+    noStroke();
+    arc(this.x+10,this.y+8,16,13,PI,0,CHORD);
+    rect(this.x+2,this.y+8,16,11);
+    rect(this.x-6,this.y+8,8,3);
+    
+  }
+  
+  
+  
 }
 
+
+function cancheckFire() {
+    if (gameObj.player.position.x>= 100 ) {
+        if (currFrameCount < (frameCount - 10)) {
+            currFrameCount = frameCount;
+            canbullets[canbulletIndex].fire = 1;
+            
+            canbullets[canbulletIndex].x = gameObj.cannon.x;
+            canbullets[canbulletIndex].y = gameObj.cannon.y;
+            canbulletIndex++;
+            if (canbulletIndex > 4) {
+                canbulletIndex = 0;
+                canbullets[canbulletIndex].fire = 0;
+            }
+        }
+    }
+} 
+
+/////////////
+class canbulletObj {
+  constructor() {
+    this.x = 0;
+    this.y = 0;
+    this.fire = 0;
+    
+  }
+  
+  draw() {
+    fill(255, 0, 0);
+    noStroke();
+    ellipse(this.x, this.y, 6,2);
+    
+    // if (gameObj.player.position.x>= 100 ){
+    //   this.x -= 4;
+    // }
+    this.x -= 4;
+    if ((dist(this.x, this.y, gameObj.player.x, gameObj.player.y) < 9)) {
+            gameObj.player.score -= 1;
+            this.fire = 0;
+    }
+  }
+} 
+
+
+
+
+
+
+//create batteries 
 class batteryObj{
   constructor(x, y){
     this.x = x;
@@ -149,7 +425,7 @@ class batteryObj{
  
 }
 
-//ball
+/////////create the bomb 
 class ballObj {
   constructor(x, y) {
     this.x = x;
@@ -204,8 +480,25 @@ class ballObj {
   }
 
   draw() {
-    fill(210, 100, 100);
-    ellipse(this.position.x, this.position.y, 10, 10);
+    push();
+    
+    translate (this.position.x, this.position.y);
+    rectMode (CENTER);
+    rotate (radians (deg));
+    //fill(128,128,128);
+    ellipse(0,0, 10, 10);
+    //fill(0,255,255);
+    line(0, 10, 0, 0);
+    line(0, 0, 0, 10);
+    
+  
+  
+  
+  pop();
+  
+
+ deg+=3;
+    
   }
   //check if land on wall
   hitwall() {
@@ -228,15 +521,23 @@ class ballObj {
 }
 
 
+var deg = 8;
 var globalInvDir = 1;
 var keyArray = [];
 var bullets;
 var bulletIndex = 0;
+
+var canbullets;
+var canbulletIndex = 0;
+
 var bombs = [];
 var currFrameCount = 0;
 
 var rightto = false;
 var leftto = false;
+
+var detect = false;
+//bullet object
 class bulletObj {
   constructor() {
     this.x = 0;
@@ -249,20 +550,20 @@ class bulletObj {
     noStroke();
     ellipse(this.x, this.y, 6,2);
     //this.y -= 5;
-    if(rightto === true ){
+    if(rightto === true ){//shoot to right when character facing right
       this.x+=4;
     }
-    else if (leftto === true ){
+    else if (leftto === true ){//shoot to left when character facing left
       this.x-=4;
     }
     if (this.x < 0 || this.x>400) {
         this.fire = 0;
     }
 
-    for (var i=0; i<enemy.length; i++) {
-        if ((enemy[i].dead === 0) &&
-            (dist(this.x, this.y, enemy[i].x, enemy[i].y) < 6)) {
-            enemy[i].dead = 1;
+    for (var i=0; i<ball.length; i++) {
+        if ((ball[i].dead === 0) &&
+            (dist(this.x, this.y, ball[i].x, ball[i].y) < 9)) {
+            ball[i].dead = 1;
             this.fire = 0;
         }
     }
@@ -270,7 +571,7 @@ class bulletObj {
 } 
 
 
-
+//////////////////////////design the main character
 class Player {
   constructor(x, y) {
     this.x = x;
@@ -283,6 +584,7 @@ class Player {
     this.acceleration = new p5.Vector(0, 0);
     this.jump = 0;
     this.score = 3;
+    this.hit = 0;
   }
     // looks different in air
   draw() {
@@ -384,6 +686,24 @@ class Player {
 
     this.acceleration.set(0, 0);
   }
+  
+  checkCollision() {
+
+    
+        if ((gameObj.ene.dead === 0) && dist(this.position.x, this.position.y, gameObj.ene.x, gameObj.ene.y) < 10){
+          gameObj.ene.dead = 1;
+          this.hit = 0;
+          if (this.currFrame < (frameCount - 50)){
+            this.score -= 3;//collect prizes
+            this.currFrame = frameCount;
+          if(this.score ===0)//when the prize is 20, game win
+            gamewin = false;
+            gameover = true;
+          }
+        }
+    
+    
+  }
 
   applyForce(force) {
     this.acceleration.add(force);
@@ -429,6 +749,15 @@ class Player {
       gameObj.gamewin = false;
       gameObj.gameover = true;
     }
+    
+    if(this.score == 0){
+      gameObj.gamewin = false;
+      gameObj.gameover = true;
+    }
+    
+
+    
+    
   }
 
   move() {
@@ -453,7 +782,7 @@ class Player {
       var xdist = abs(ball[i].position.x - this.position.x);
       var ydist = abs(ball[i].position.y - this.position.y);
 
-      if (ydist + xdist < 15) {
+      if (ydist + xdist < 8) {
         //console.log("BALL hit player);
         return true;
       }
@@ -463,9 +792,9 @@ class Player {
   
   //
   eatbattery(){
-    for (var i = 0; i<battery.length;i++){
-      if((battery[i].dead ===0) && dist(this.position.x,this.position.y,battery[i].x+5,battery[i].y+20)<=35){
-        battery[i].dead = 1;
+    for (var i = 0; i<gameObj.battery.length;i++){
+      if((gameObj.battery[i].dead ===0) && dist(this.position.x,this.position.y,gameObj.battery[i].x+5,gameObj.battery[i].y+20)<=35){
+        gameObj.battery[i].dead = 1;
         this.score+=2;
       }
     }
@@ -520,7 +849,7 @@ function checkFire() {
 ///////////////////////////////
 //////////////////////////////
 
-
+///////////////////////////design elements in main page
 var custom_player=[];
 function title(){
   textFont("impact",60);
@@ -535,7 +864,7 @@ function title(){
 
 var pChange = 100;
 var pChangeDir = 0;
-
+//////////////////design button to switch between pages
 function playButton(){
     fill(100,pChange,pChange);
     //strokeWeight(2);
@@ -564,7 +893,7 @@ function playButton(){
 
 var iChange = 100;
 var iChangeDir = 0;
-
+///////////////////////////instruction button
 function instrucButton(){
     fill(100,iChange,iChange);
     rect(300,420,150,50);
@@ -593,15 +922,16 @@ function instrucButton(){
 function instruContent(){
     textFont("impact",20);
     fill(0,0,0);
-    text('In this game, the palyers can control a robot with intelligence that needs to fight enemies \n and find its way to escape a robot laboratory.',20,100);
-    text("Movement: Arrow keys to move left right and up", 20, 200);
-    text("Combat: Press space bar to fire your gun. \nThe main character could gain electricity by eating batteries in the map. \nThe main character will also lose one electrocity by each hit from enemies and \n by stepping on traps in the map.",20, 300);
+    text('In this game, the palyers can control a robot with intelligence that needs to evade enemies \n and find its way to escape a robot laboratory.',20,100);
+    text("Movement: Arrow keys to move left right and jump", 20, 200);
+    text("Combat: The main character could gain electricity by eating batteries in the map. \nThe main character will also lose three electrocity by each hit from enemies and \n by colliding with black bombs in the map. The main character needs to go through \n multiple levels to escape the lab",20, 300);
 }
 
 
 var rChange = 100;
 var rChangeDir = 0;
 
+////return from instruction page 
 function returnMenu(){
     fill(100,rChange,rChange);
     rect(300,10,150,50);
@@ -627,16 +957,179 @@ function returnMenu(){
 	}
 }
 
-
 ///////////////////////design enemy object
-class eneObj{
+class eneoObj{
   constructor(x, y){
     this.x = x;
     this.y = y;
     this.health = 1;
     //this.screenState = screenState;
+    this.state = [new wanderState(), new chaseState()];
+    this.currState = 0;
+    
+    //this.currFrame = frameCount;
+    
+    this.angle = 0;
+    //this.step = new createVector(0, -1);
+    this.step = new p5.Vector(0, -1);
+    
     this.show = true;
     this.enemyDir = 0;
+    this.dead = 0;
+  }
+  
+  draw(){
+    //if (this.show === true) {
+    push();
+    translate(this.x, this.y);
+    rotate(this.angle);
+    fill(255, 0, 0);
+    noStroke();
+    arc(10,10,16,13,PI,0,CHORD);
+    rect(2,10,16,5);
+    triangle(2,15,10,20,18,15);
+    fill(255);
+    noStroke();
+    ellipse(10,10,7,11);
+    fill(0);
+    noStroke();
+    ellipse(10,10,2,6);
+    pop();
+    //}
+  }
+  
+  changeState(x) {///switch between two different states
+    this.currState = x;
+  }
+  
+  chase(){
+    if (dist(this.x, this.y, gameObj.player.position.x, gameObj.player.position.y) <150) {
+        this.step.set(gameObj.player.position.x - this.x, gameObj.player.position.y - this.y);
+        this.step.normalize();
+        this.step.mult(0.3);
+        //print(this.step.heading());  // this shows the angle is different based on quadrant translation
+        //this.angle = this.step.heading() + HALFPI;
+        this.x += this.step.x;
+        this.y += this.step.y;
+    }
+  }
+  
+
+}
+
+
+class wanderState {///////////////wandering state
+  constructor() {
+    this.angle = 0;
+    this.wanderDist = 0;
+    this.step = new p5.Vector(0,0);
+  }
+  
+  ///// EXPERIMENT /////
+  execute(me) {
+    if (this.wanderDist <= 0) {
+        this.wanderDist = random(50, 80);
+        this.angle = random(0, 360);
+        this.step.set(cos(this.angle), sin(this.angle));
+    }
+    this.wanderDist--;
+    //me.position.add(this.step);
+    me.x += this.step.x;
+    me.y += this.step.y;
+    if (me.x > 390) {
+        this.step.x = -round(random(1,2));
+    }
+    else if (me.x < 10) {
+        this.step.x = round(random(1, 2));
+    }
+    if (me.y > 390) {
+        this.step.y = -round(random(1, 2));
+    }
+    else if (me.y < 10) {
+        this.step.y = round(random(1, 2));
+    }
+    
+    //////////when a enemy and the main chracterar are close enough, state changes
+    if (dist(me.x, me.y, gameObj.player.position.x, gameObj.player.position.y) <= 150) {
+        me.changeState(1);
+        
+    }
+  }
+}  // wanderState
+
+
+
+
+////////////////////////
+class chaseState {
+  constructor() {
+    this.step = new p5.Vector(0,-1);
+  }
+  
+  ///// EXPERIMENT /////
+  execute(me) {
+    if (dist(me.x, me.y, gameObj.player.position.x, gameObj.player.position.y) <= 150) {///when enemy discover the character
+      
+        this.step.set(gameObj.player.position.x - me.x, gameObj.player.position.y - me.y);///chase action
+        this.step.normalize();
+        this.step.mult(0.3);//enemy's cchase speed
+        //this.angle = this.step.heading() + HALFPI; 
+        //me.position.add(this.step);
+        me.x += this.step.x;
+        me.y += this.step.y;
+        //
+        
+        if (dist(gameObj.player.position.x, gameObj.player.position.y, me.x, me.y) < 10){
+            // gameObj.gameover = true;
+            // gameObj.gamewin = false;
+          ///when the enemy catches the character, the game over
+          gameObj.player.score -= 3;
+          me.dead = 1;
+          
+        }
+    }
+
+    else if (dist(me.x, me.y, gameObj.player.position.x, gameObj.player.position.y) > 150) {
+        me.changeState(0);//when far enough, change back to wander state
+    }
+  }
+}  // chaseState
+
+
+
+
+///////////////draw exit
+class exitObj{
+  constructor(x,y){
+    this.x = x;
+    this.y = y;
+  }
+  
+  draw(){
+    push();
+    fill(255, 0, 0);
+    noStroke();
+    ellipse(this.x,this.y,25,9);
+    pop();
+  }
+}
+
+var exit = new exitObj(40, 460);
+
+
+
+
+
+
+
+
+var ene;
+///////////////////////design enemy object
+class eneObj{
+  constructor(x, y){
+    this.x = x;
+    this.y = y;
+    this.dead = 0;
   }
   
   draw(){
@@ -831,9 +1324,13 @@ function setup() {
   
   bullets = [new bulletObj(), new bulletObj(), new bulletObj(), new bulletObj(), new bulletObj()];
   
+  canbullets = [new canbulletObj(), new canbulletObj(), new canbulletObj(), new canbulletObj(), new canbulletObj()];
   
+  //ene.push(new eneoObj(40, 15));
+  //var enemyo = new eneoObj(40, 460, 1);
   gameObj = new GameObject();
-
+  //battery.push(new batteryObj(100, 335));
+  //battery.push(new batteryObj(260, 255));
   ball.push(new ballObj(50, 10));
   push();
   noStroke;
@@ -892,7 +1389,31 @@ function setup() {
   line(180,80,160,60);
   maps.push(get(0, 0, width, height));
   pop();
-  gameObj.initmap();
+    if(mapnum == 0)
+    {
+        gameObj.initmap();
+      print("map0");
+    }
+  else if (mapnum == 1)
+    {
+      gameObj.initmap1();
+       print("map1");
+    }
+    else if (mapnum == 2)
+    {
+      gameObj.initmap2();
+       print("map2");
+    }
+        else if (mapnum == 3)
+    {
+      gameObj.initmap3();
+       print("map3");
+    }
+      else if (mapnum == 4)
+    {
+      gameObj.initmap4();
+       print("map4");
+    }
 
   wind = new p5.Vector(1, 0);
   gravity = new p5.Vector(0, 0.1);
@@ -906,13 +1427,28 @@ function draw_walls() {
   }
 }
 
+function draw_eneo() {
+  for (var i = 0; i < gameObj.ene.length; i++) {
+    gameObj.ene[i].draw();
+  }
+}
 
+function draw_battery() {
+  for (var i = 0; i < gameObj.battery.length; i++) {
+    if(gameObj.battery[i].dead === 0){
+          gameObj.battery[i].draw();
+        }
+    
+    
+  }
+}
 
 function mousePressed() {
   if (retry) {
     gameObj.gameover = true;
   } else {
     gameObj.gameover = false;
+    mapnum = mapnum+1;
   }
 }
 
@@ -924,26 +1460,58 @@ function mousePressed() {
 
 function draw() {
   background(220);
-  if (gameState === 1) {
+  if (gameState === 1) {//in main page
       startScreen();
   }
-   else if (gameState === 2) {
-         background(63, 63, 63);
+   else if (gameState === 2) {///to play game
+     background(63, 63, 63);
      textSize(20);
      text("Electricity:",280, 50);
      text(gameObj.player.score,385,50);
      
      
+     // enemyo = new eneoObj(40,15);
+     // enemyo.draw();
+     // enemyo.chase();
+     // enemyo.state[enemyo.currState].execute(enemyo);
+     
+     exit = new exitObj(30, 64);
+     exit.draw();
 
-  if (gameObj.gameover) {
+  if (gameObj.gameover) {//when gamestop condition
     ball = [];
     ball.push(new ballObj(50, 10));
-
+    // battery.push(new batteryObj(100, 335));
+    // battery.push(new batteryObj(260, 255));
     gameObj.walls = [];
     
-    battery = [];
+    gameObj.battery = [];
 
-    gameObj.initmap();
+    if(mapnum == 0)
+    {
+        gameObj.initmap();
+      print("map0");
+    }
+  else if (mapnum == 1)
+    {
+      gameObj.initmap1();
+       print("map1");
+    }
+    else if (mapnum == 2)
+    {
+      gameObj.initmap2();
+       print("map2");
+    }
+        else if (mapnum == 3)
+    {
+      gameObj.initmap3();
+       print("map3");
+    }
+      else if (mapnum == 4)
+    {
+      gameObj.initmap4();
+       print("map4");
+    }
 
     //gameObj.player.score = 0;
 
@@ -954,26 +1522,37 @@ function draw() {
     push();
 
     pop();
-    if (!gameObj.gamewin) {
+    if (!gameObj.gamewin) {//not win condition
       push();
       fill(222, 222, 15);
       textSize(40);
       text("You Lose!", width / 2 - 100, height / 2 - 50);
+      mapnum = 0;
+      fill(255);
+    rect(320, 270, 150, 80);
+    fill(0);
+    textSize(40);
+    text("Replay", 330, 330);
       pop();
-    } else {
+    } else {//win condition
       push();
       fill(21, 53, 68);
       textSize(40);
       text("You Win!", width / 2 - 100, height / 2 - 50);
-      pop();
-    }
-    push();
-    fill(255);
-    rect(120, 270, 150, 80);
+      fill(255);
+    rect(320, 270, 150, 80);
     fill(0);
     textSize(40);
-    text("Replay", 130, 330);
-    pop();
+    text("Next", 330, 330);
+      pop();
+    }
+    // push();
+    // fill(255);
+    // rect(120, 270, 150, 80);
+    // fill(0);
+    // textSize(40);
+    // text("Replay", 130, 330);
+    // pop();
 
     pop();
   } else if (gameObj.gamestate) {
@@ -987,18 +1566,35 @@ function draw() {
       }
     }
     
-    for (var i = 0; i < battery.length; i++) {
-    if(battery[i].dead === 0){
-          battery[i].draw();
+    for (var i = 0; i < gameObj.battery.length; i++) {
+    if(gameObj.battery[i].dead === 0){
+          gameObj.battery[i].draw();
         }
     
-  }
-    for (var i = 0; i < doors.length; i++) {
-
-          doors[i].draw();
-
+    }
     
-  }
+    for (var i = 0; i < gameObj.cannon.length; i++) {
+    
+          gameObj.cannon[i].draw();
+        
+    
+    }
+    cancheckFire();
+    for (i =0; i<5; i++) {
+            if (canbullets[i].fire === 1) {
+                canbullets[i].draw();
+            }
+        }
+    //draw_eneo();
+    
+    if(gameObj.ene.dead ===0){
+      gameObj.ene.draw();
+    gameObj.ene.chase();
+    gameObj.ene.state[gameObj.ene.currState].execute(gameObj.ene);
+    }
+    
+        //ene[i].checkCollide();   
+    
     
     draw_walls();
     //draw_battery();
@@ -1015,7 +1611,7 @@ function draw() {
     
     pop();
 
-    if (gameObj.player.position.y < 100 && gameObj.player.position.x < 100) {
+    if (gameObj.player.position.y < 50 && gameObj.player.position.x < 50) {
       gameObj.gamewin = true;
       gameObj.gameover = true;
     }
@@ -1027,7 +1623,9 @@ function draw() {
   }
       
   }
-  else if (gameState === 3) {
+  
+  
+  else if (gameState === 3) {//instruction page
       instrucScreen();
       line(120, 250, 170, 250);
       line(150, 230, 170, 250);
@@ -1050,7 +1648,7 @@ function draw() {
   
   
 }
-function Particle(x, y, vx, vy) {
+function Particle(x, y, vx, vy) {///particle effects
 	
 	this.pos = new p5.Vector(x+10, y+10);
 	this.vel = new p5.Vector(vx, vy);
