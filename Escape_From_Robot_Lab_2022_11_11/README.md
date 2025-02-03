@@ -16,7 +16,7 @@
      - Press the space bar to fire your gun and defeat enemies.
   3. **Electricity Management**:
      - **Gain electricity**: Collect batteries scattered throughout the map.
-     - **Lose electricity**: Each hit from enemies or stepping on traps will decrease the robot's electricity by one unit.  
+     - **Lose electricity**: Each hit from enemies will decrease the robot's electricity by three unit. Getting hit by bombs will kill robot if the electricity is lower than 3 unit
   4. **Interactive Challenges**:
      - Navigate carefully through the map to avoid traps and strategically eliminate enemies to survive.
 
@@ -29,7 +29,7 @@
 ---
 
 ## Demo
-[**Click here to view the p5.js Demo**](https://editor.p5js.org/shiqianl18/full/ZPEq5LdcM)
+[**Click here to view the p5.js Demo**]([https://editor.p5js.org/shiqianl18/full/c7Ufvy6yt])
 
 ---
 
